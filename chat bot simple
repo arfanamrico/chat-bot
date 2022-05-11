@@ -1,0 +1,4 @@
+kata = ["halo","baik","angel","kualu","sampai jumpa"]
+for sapa in kata:
+    user = input("user\t: ")
+    print("bot\t: ",sapa)
