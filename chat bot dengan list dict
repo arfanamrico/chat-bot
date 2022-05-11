@@ -1,0 +1,29 @@
+kata = []
+print('''
+1. melatih
+2. menyapa
+3. keluar
+''')
+while True:
+    pilihan = int(input("pilihan\t: "))
+    if pilihan == 1:
+        while True:
+            user = input("user\t: ")
+            if user == "selesai":
+                break
+            else:
+                bot = input("bot\t: ")
+                data = {"user":user, "bot":bot}
+                kata.append(data)
+    if pilihan == 2:
+        #print(kata)
+        while True:
+            user = input("user\t: ")
+            if user == "selesai":
+                break
+            else:
+                for data in kata:
+                    if user == data['user']:                      
+                        print('bot\t: ',data['bot'])
+    if pilihan == 3:
+        break
