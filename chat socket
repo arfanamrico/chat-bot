@@ -1,0 +1,56 @@
+import socket
+import subprocess 
+import os
+# running di cmd saja, buka 2 jendela cmd
+os.system('cls')
+
+message = """
+WELCOME TO CHAT ROOM
+
+Choose this list for enter chat room
+
+1. Create server (as admin)
+2. Login as client (as user)
+
+Develop and code by Fukuyama bagus andita
+"""
+
+print(message)
+choose = input("Choose the list : ")
+if (choose == "1"):
+    address = input("Enter address : ")  #ketikkan localhost
+    port = int(input("Enter port : ")) #ketikkan 8888
+
+    sock = socket.socket()
+    sock.bind((address, port))
+    print("Server starting ... ")
+    sock.listen(1)
+    print("Listening to client ...")
+    client, client_addr = sock.accept()
+    print("Client accepting ", client)
+    while True:
+        command = input("Enter message to client : ")
+        print("Your message : ", command)
+        command = command.encode()
+        client.send(command)
+        output = client.recv(1024)
+        result_message = output.decode()
+        print("CLIENT MESSAGE : ", result_message)
+elif (choose == "2"):
+    address = input("Enter address : ") #ketikkan localhost
+    port = int(input("Enter port : ")) #ketikkan 8888
+
+    sock = socket.socket()
+    sock.connect((address, port))
+
+    while True:
+        output = sock.recv(1024)
+        output = output.decode()
+        print("SERVER MESSAGE : ", output)
+        message2 = input("Send message to client : ")
+        message3 = f"echo {message2}"
+        print("Your message : ", message2)
+        op = subprocess.Popen(message3, shell=True, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+        out = op.stderr.read()
+        err = op.stdout.read()
+        sock.send(out+err)
